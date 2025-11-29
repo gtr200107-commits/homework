@@ -2,8 +2,8 @@ name: Daily Homework Notifier
 
 on:
   schedule:
-    # ساعت 14:30 به وقت UTC برابر است با 18:00 به وقت تهران
-    - cron: '30 14 * * *'
+    # ساعت 15:06 به وقت UTC برابر است با 18:36 به وقت تهران
+    - cron: '6 15 * * *'
   
   # قابلیت اجرای دستی برای تست کردن دکمه Run Workflow
   workflow_dispatch:
