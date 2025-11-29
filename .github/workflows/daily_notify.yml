@@ -1,0 +1,35 @@
+name: Daily Homework Notifier
+
+on:
+  schedule:
+    # ساعت 14:30 به وقت UTC برابر است با 18:00 به وقت تهران
+    - cron: '30 14 * * *'
+  
+  # قابلیت اجرای دستی برای تست کردن دکمه Run Workflow
+  workflow_dispatch:
+
+jobs:
+  send-notification:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run Notifier Script
+      env:
+        # اتصال متغیرهای مخفی گیت‌هاب به اسکریپت پایتون
+        SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+        CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+      run: python notifier.py
